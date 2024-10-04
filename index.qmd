@@ -1,0 +1,71 @@
+```{r}
+plot(cars)
+```
+
+```{r}
+plot(
+ x=airquality$Temp,
+ y=airquality$Ozone,
+ xlab="Temperatura (F)",
+ ylab="Ozono (U.D)",
+ main="Relación entre Temperatura y Ozono en la calidad del aire"
+)
+```
+
+```{r}
+personas_colorpelo <- aggregate(Freq ~ Hair, data = HairEyeColor, FUN = sum)
+barplot(
+ personas_colorpelo$Freq,
+ names.arg = personas_colorpelo$Hair,
+ main = "Cantidad de personas según color de pelo",
+ xlab = "Color de pelo",
+ ylab = "Número de personas"
+)
+```
+
+```{r}
+data("HairEyeColor")
+personas_colorojos <- aggregate(Freq ~ Eye, data = HairEyeColor, FUN = sum)
+pie(
+ x= personas_colorojos$Freq,
+ main = "Distribucion de personas por color de ojos",
+ labels = paste(personas_colorojos$Eye, ":", personas_colorojos$Freq)
+)
+```
+
+```{r}
+data(airquality)
+hist(airquality$Temp,
+ main = "Histograma de Temperatura",
+ xlab = "Temperatura (F)",
+ ylab = "Cantidad de días"
+)
+```
+
+---
+title: "Graficos del sistema base de R"
+author: "Julieta Laucirica"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).

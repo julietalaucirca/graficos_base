@@ -1,4 +1,29 @@
+---
+title: "Graficos del sistema base de R"
+subtitle: "Curso PF 0953-01"
+author: "Julieta Laucirica"
+date: "2024-10-03"
+format:
+  html:
+    toc: true
+theme: yeti
+lang: es
+---
+
 ```{r}
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+## Graficos base en R
+
+### Grafico de dispersion
+
+```{r}
+#| label: grafico-dispersion-cars
+#| code-fold: true
 plot(cars)
 ```
 
@@ -12,6 +37,8 @@ plot(
 )
 ```
 
+### Grafico de barras
+
 ```{r}
 personas_colorpelo <- aggregate(Freq ~ Hair, data = HairEyeColor, FUN = sum)
 barplot(
@@ -23,6 +50,7 @@ barplot(
 )
 ```
 
+### Grafico de pie
 ```{r}
 data("HairEyeColor")
 personas_colorojos <- aggregate(Freq ~ Eye, data = HairEyeColor, FUN = sum)
@@ -33,6 +61,7 @@ pie(
 )
 ```
 
+### Histograma
 ```{r}
 data(airquality)
 hist(airquality$Temp,
@@ -42,30 +71,42 @@ hist(airquality$Temp,
 )
 ```
 
----
-title: "Graficos del sistema base de R"
-author: "Julieta Laucirica"
-format: html
-editor: visual
----
-
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
-1 + 1
+#| label: grafico-dispersion-penguins
+
+penguins |>
+  ggplot(aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point(size = 4) +
 ```
 
-You can add options to executable code like this
+###Relacion entre la longitud del pico y la masa de pinguinos
 
 ```{r}
-#| echo: false
-2 * 2
+# Gráfico de dispersión de longitud del pico vs masa (peso)
+penguins |>
+  ggplot(aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point(size = 2) +
+  geom_smooth(method = "loess", se = FALSE) +
+  ggtitle("Longitud del pico vs. masa") +
+  xlab("Longitud del pico (mm)") +
+  ylab("Masa (g)") +
+  labs(color = "Especie", shape = "Especie")
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+
+```{r}
+# Gráfico de dispersión de longitud del pico vs masa (peso) por especie
+penguins |>
+  ggplot(aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species,
+                 shape = species),
+             size = 2) +
+  geom_smooth(method = "lm", se = FALSE, aes(color = species)) +
+  scale_color_manual(values = c("darkorange", "darkorchid", "cyan4")) +
+  ggtitle("Longitud del pico vs. masa por especie") +
+  xlab("Longitud del pico (mm)") +
+  ylab("Masa (g)") +
+  labs(color = "Especie", shape = "Especie")
+```
+
